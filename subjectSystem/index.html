@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>
+			教师管理平台
+		</title>
+		<!--关联css文件-->
+		<link type="text/css" rel="stylesheet" href="style/reset.css">
+		<link type="text/css" rel="stylesheet" href="style/main.css">
+		<style type="text/css">
+			span{
+				padding-bottom: 50px;
+				font-size: 25px;
+			}
+		</style>
+		<script type = "text/javascript" src = "js/teacher_login_para.js"></script>
+	</head>
+	<body>
+		<div class="header_box">
+			<div class="header">
+				<h1>教师管理平台</h1>
+			</div>
+			<div class="header_image">
+				
+			</div>
+		</div>
+		<script type = "text/javascript">
+			function pasd(){
+				var id = window.localStorage.getItem("userid");
+				var frame = document.getElementsByTagName("iframe")[0];
+				frame.setAttribute("src","password2.html" + "?id=" + id);
+			}
+		</script>
+		<div class="icons">
+			<img id="user" src="images/userHead.png" alt="用户" onclick = "pasd();">
+			<div class="image">
+				<span id="name">name</span><span id="id">id</span><img id="teach_image" src="images/teacherM.jpg" alt="图片">
+			</div>
+		</div>
+		<div class="mid">
+			<iframe src="php/firstPage.php?p=0" frameborder="1">	
+			</iframe>
+		</div>
+		
+	</body>
+</html>

@@ -1,0 +1,11 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{background-color: #dddddd;}
+#look{border: 1px;border-color: #000000;}
+.header{ width: 30%; height:10%; margin-top: 5%; margin-left: 30%; padding-top: 10px;  
+	padding-bottom: 10px; padding-left: 10px; border: 2px solid #000000; 
+	background-color: #ffffff; font-size: 20px;}
+#iForm{width: 100%; height:100%;}
+.btn{font-size: 18px;border:1px solid;border-radius: 15px;}
+#iTbale{font-size: 18px;}

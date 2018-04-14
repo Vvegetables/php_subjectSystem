@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>
+			学生管理
+		</title>
+		<style type="text/css">
+			#container{
+				margin-top: 10%;
+			}
+			#headline{
+				width: 600px;
+				height: 50px;
+				background-color: blue;
+				margin-left: 30%;
+			}
+			#frame{
+				width: 552px;
+				height: 520px;
+				margin-left: 30%;
+				border: 4px solid blue;
+				font-size: 30px;
+				padding-left: 40px;
+				padding-top: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+		<script type="text/javascript" src = "js/stu_nums_load.js">
+		</script>
+			<div id="headline">
+				<span style="font-size: 30px;color: white;padding-left: 10px;">学生管理</span>
+				<button  onclick = "myload()" style="float:right;margin-top: 10px;">[关 闭]</button>
+			</div>
+			<div id="frame">
+				<form action='php/handle_stu_nums_modify.php?p=0' method = "post">	
+					<span style="font-size: 15px;">学 号<span style="color: red;">*</span>：</span><input type="text" name="studentid" id = "studentid" required="required" readonly="readonly"><br><br>								<span style="font-size: 15px;">姓 名<span style="color: red;">*</span>：</span><input type="text" name="studentname" id = "studentname" required="required"><br><br>						
+					<span style="font-size: 15px;">性 别<span style="color: red;">*</span>：</span><input type="text" name="sex" id = "sex" required="required"><br><br>	
+					<span style="font-size: 15px;">班 级<span style="color: red;">*</span>：</span><input type="text" name="class" id = "class" required="required"><br><br>	
+					<div id="bottom">
+						<input type="submit" value="保存" style="background-color: blue;border-radius: 20px;width: 60px;color:white;">	
+					</div>
+				</form>
+				<article id="promt"></article>
+			</div>
+		</div>
+		<script type="text/javascript" src = "js/modify_stu_nums.js"></script>
+	</body>
+</html>

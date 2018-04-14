@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="style/fPage.css">
+		<link type="text/css" rel="stylesheet" href="style/reset.css">
+		<title>
+			first
+		</title>
+		<style type="text/css">
+			.iBody{
+				margin-top: 3%;
+				margin-left: 40%; 
+			}
+			#bottom input{
+				width:60px; 
+				border:1px solid;
+				background-color: #eeeeee;
+			}
+			#ibottom{
+				margin-top: 300px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<form id="iForm" action="" method="">
+				形式时间：<input style="border:#000000 1px solid" id="look" type="text" name="课程名">&nbsp&nbsp&nbsp
+				<input class="btn" type="button" value="查询" onclick="">&nbsp&nbsp&nbsp
+				<input class="btn" type="button" value="新增" onclick="">&nbsp&nbsp&nbsp
+				<input class="btn" type="button" value="删除" onclick="">&nbsp&nbsp&nbsp
+			</form>			
+		</div>
+		<div class="iBody">
+			<table id="iTbale" cellpadding="10" border="1">
+				<tr>
+					<th><input type="checkbox" name="全选" value="全选">全选</th>
+					<th>形式时间</th>
+					<th>实际时间</th>
+					<th>操作</th>
+				</tr>
+			</table>		
+		</div>
+		<div id="ibottom">
+		</div>
+	</body>
+</html>

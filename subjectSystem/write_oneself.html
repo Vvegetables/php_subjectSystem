@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="style/fPage.css">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<title>
+			自定义输入
+		</title>
+		<style type="text/css">
+			.header{
+				text-align: center;
+			}
+			.iBody{
+				margin-top: 3%;
+				margin-left: 30%; 
+			}
+			#table{
+				width: 50%;
+				font-size:20px;
+				margin-top: 20px;
+				margin-bottom: 50px;
+			}
+			.btn{
+/*				color: #8c96a0;*/
+				margin-top: 20px;
+				font-size: 20px;
+				text-shadow:1px 1px 1px #000;
+				border:1px solid #dce1e6;
+				box-shadow: 0 1px 2px #000 inset,0 -1px 0 #a8abae inset;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<p style="font-size: 30px;">自定义输入</p>		
+		</div>
+		<div class="iBody">
+			学号：<input type="text" id="user"/>
+			姓名：<input type="text" id="name"/>
+			性别：<input type="text" id="sex"/>
+			班级：<input type="text" id="class"/>
+			<br>
+			<button id="b1" class = "btn">添加</button><br>
+			<table border=1 id="table">
+			<tr><td>学号</td><td>姓名</td><td>性别</td><td>班级</td><td>操作</td></tr>
+			</table>
+			<button id="b2" class = "btn">保存</button><br>
+		</div>
+	</body>
+	<script type="text/javascript">
+  
+		$("#b1").click(function(){
+		var $id=$("#id");
+		var $name=$("#name");
+		var $sex=$("#sex");
+		var $class=$("#class");
+  
+		//组装对象
+		$tr=$("<tr></tr>");
+		$td1=$("<td></td>");
+		$td1.text($id.val());
+  
+		$td2=$("<td></td>");
+		$td2.text($name.val());
+  
+		$td3=$("<td></td>");
+		$td3.text($sex.val());
+		
+		$td4=$("<td></td>");
+		$td4.text($class.val());  
+		$td5=$("<td></td>");
+  
+		$href=$("<a></a>");
+		$href.attr("href","##");
+		$href.text("delete");
+		$td5.append($href);
+  
+		$href.click(function(){
+			if(window.confirm("确定删除？")){
+  				//这里使用this表示当前事件绑定对象---？ $(this)不能用$(href)代替，否则会认为每次都是最新对象，原有对象的行为不能保存
+  				$(this).parent().parent().remove();  
+			}else{
+   				return;
+			}
+		});
+  
+		$("#table").append($tr);
+    		$tr.append($td1);
+    		$tr.append($td2);
+    		$tr.append($td3);
+    		$tr.append($td4);
+    		$tr.append($td5);
+		});
+  
+</script>
+</html>

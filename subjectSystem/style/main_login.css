@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* CSS Document */
+/*公用*/
+
+/*topBar*/
+.topBar{ width:1920px;margin-left:auto;margin-right:auto; height:50px;background-color:#00CCFF; line-height:31px; padding-top:140px; padding-left:800px;}
+
+
+/*logoBar*/
+.logoBar{ width:1920px;margin-left:auto;margin-right:auto; height:1320px;background-color:#00CCFF;}
+/*logo*/
+.logo{ padding-top:2px;padding-left:450px; width:600px;; height:450px; float:left;}
+.logo img{ width:600px; height:450px;}
+/*checkIn_box*/
+.checkIn_box{width:410px;padding-left:10px; height:450px;background-color:#FFF; border:#000 solid 1px; float:left;}
+
+.ID{ padding-left:65px;font:10px/15px "Microsoft YaHei","微软雅黑"; padding-top:15px; float:left;}
+.password{padding-left:65px;font:10px/15px "Microsoft YaHei","微软雅黑"; padding-top:65px;}
+
+.checkInID_text{width:200px;height:25px; line-height:35px\9; padding:0 5px ; background-color:#CCC; margin-top:10px; margin-left:15px;}
+.checkInPW_text{width:210px;height:25px; line-height:35px\9; margin-left:5px;background-color:#CCC; }
+
+/*button*/
+.checkIn_btn{width:70px;; background-color:#FF8C00; color:#FFF;font:14px/35px "Microsoft YaHei","微软雅黑"; margin-top:40px; margin-left:150px;}
+.forget_btn{width:70px;; background-color:#FF8C00; color:#FFF;font:14px/35px "Microsoft YaHei","微软雅黑"; margin-left:20px;}
+
+/*title*/
+.title{text-indent:120px; padding:30px;font:14px/35px "Microsoft YaHei","微软雅黑";}

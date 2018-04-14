@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>
+			导入学生
+		</title>
+		<style type="text/css">
+			#container{
+				width: 100%;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<script type = "text/javascript">
+			function selectionJump(){
+				//alert(document.cookie);
+				var selection = document.getElementById("way2");
+				var mydata = window.location.href;
+				var decode = decodeURI(mydata);
+				var data = decode.split("?")[1];
+				//var para = data.split("&");
+				//var val = para.split("=");
+				var tname = data.split("&")[0].split("=")[1];
+				var tid = data.split("&")[1].split("=")[1];
+				var index = selection.selectedIndex;
+				var value = selection[index].value;
+				var myframe = document.getElementsByTagName("iframe")[0];
+				if(value == 'file'){
+					myframe.setAttribute("src","file_open.html?"+"teachername="+tname + "&teacherid=" + tid);
+				}else{
+					//alert("write_oneself2.html?classname="+para[0].split("=")[1]+"&teachername="+para[1].split("=")[1]);
+					myframe.setAttribute("src","write_oneself2.html?"+"teachername="+tname + "&teacherid=" + tid);
+				}
+			}
+		</script>
+		<div id="container">
+			<p style="font-size: 40px;">导入学生</p>
+			<span style="font-size: 20px;">选择导入的方式:</span>
+			<select name="way" id="way2">
+				<option value="file">文件导入</option>
+				<option value="byYourself">自定义编写</option>
+			</select>
+			<br><br>
+			<button onclick = "selectionJump()">确定</button>&nbsp&nbsp&nbsp
+			<br><br>
+			<iframe src="" frameborder="1" style="width: 100%; height: 700px;"></iframe>
+		</div>
+	</body>
+</html>

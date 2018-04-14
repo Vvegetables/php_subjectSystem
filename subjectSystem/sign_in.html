@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>内联框架打开</title>
+		<link type="text/css" rel="stylesheet" href="style/reset.css">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<style type="text/css">
+			div{
+				margin-top: 15%;
+				margin-left: 30%;
+			}
+			span{
+				font-size: 25px;
+			}
+			input{
+				font-size: 25px;
+				border: 1px solid;
+				padding: 2px;
+			}
+			[name=sign]{
+				font-size: 18px;
+				background-color: #dedede;
+				width: 100px;
+			}
+			#prompt{
+				margin-top: 5%;
+				margin-left: 0%;
+				text-align: center;
+				color: red;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<span>输入您的工号：</span><input type="text" required = "required" name = "teacherid" id = "teacherid"><br><br><br><br>
+			<button name="sign" id = "sign">确定</button>
+		</div>
+		<div id = "prompt"><h1></h1></div>
+		<script type = "text/javascript">
+            $("#sign").bind("click",function(){
+                var data = $("#teacherid").val();
+                $.ajax({
+                    type: "POST",
+                    url: "php/qrcode_login.php",
+                    data: "teacherid=" + data,
+                    success:function(req){
+                    	//alert(req);
+                    	if(req == "账号输入错误！请重新输入！"){
+                    		$("h1").html(req);
+                    	}else{
+                    		window.location.href = "choose_subject.html";
+                    	}
+                       
+                    }
+                });
+            });					
+		</script>
+	</body>
+</html>

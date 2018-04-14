@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>
+			课程管理
+		</title>
+		<script type="text/javascript" src = "js/modernizr.js"></script>
+		<style type="text/css">
+			#container{
+				margin-top: 10%;
+			}
+			#headline{
+				width: 600px;
+				height: 50px;
+				background-color: blue;
+				margin-left: 30%;
+			}
+			#frame{
+				width: 552px;
+				height: 520px;
+				margin-left: 30%;
+				border: 4px solid blue;
+				font-size: 20px;
+				padding-left: 40px;
+				padding-top: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+		<script type="text/javascript" src = "js/load2.js">
+		</script>
+		<script type="text/javascript" src = "js/jquery.min.js">
+		</script>
+		<script type="text/javascript">
+			function add_btn(){
+				var storage = window.localStorage;
+				var tname = storage.getItem("username");
+				var tid = storage.getItem("userid");
+				//alert('way_of_in.html?classname='+classname+"&teachername=" + tname);
+				var select_term = document.getElementById("term");
+				var select_class_in = document.getElementById("class_in");
+				var select_class_out = document.getElementById("class_out");
+				var subname = document.getElementById("subname");
+
+				var index1 = select_term.selectedIndex;
+				var term = select_term[index1].value;	
+				var index2 = select_class_in.selectedIndex;
+				var class_in = select_class_in[index2].value;
+				var index3 = select_class_out.selectedIndex;
+				var class_out = select_class_out[index3].value;			
+				storage.setItem("add_sub_old_term",term);
+				storage.setItem("add_sub_old_class_in",class_in);
+				storage.setItem("add_sub_old_class_out",class_out);
+				storage.setItem("add_sub_old_subname",subname.value);
+				var add_sub_old_url = "subject_add2.html?" + "subname="	+ subname.value + "&term=" + term + "&class_in=" + class_in + "&class_out=" + class_out;
+				storage.setItem("add_sub_old_url",add_sub_old_url);
+				//alert(storage.getItem("add_sub_old_url"));
+				window.location.href = 'way_of_in.html?' + "teachername=" + tname + "&teacherid=" + tid;
+			}
+		</script>
+			<div id="headline">
+				<span style="font-size: 30px;color: white;padding-left: 10px;">课程管理</span>
+				<button  onclick = "myload()" style="float:right;margin-top: 10px;">[关 闭]</button>
+			</div>
+			<div id="frame">
+				<span style="font-size: 15px;">学生人数<span style="color: red;">*</span>：</span><button id="list" onclick = "add_btn()">导入学生</button><a href="" id="stunum"></a><br><br>			
+				<form action="php/handle_sub_add_prompt.php?p=0" method = "post">
+					<span style="font-size: 15px;">课程名<span style="color: red;">*</span>：</span><input type="text" name="subject" id = "subname" required="required"><br><br>
+					<span style="font-size: 15px;">课程学期<span style="color: red;">*</span>：</span>
+					<select name="term" id = "term">
+						<option value="2015/2016(1)">2015/2016(1)</option>
+						<option value="2015/2016(2)">2015/2016(2)</option>
+						<option value="2016/2017(1)">2016/2017(1)</option>
+						<option value="2016/2017(2)">2016/2017(2)</option>
+						<option value="2017/2018(1)">2017/2018(1)</option>
+						<option value="2017/2018(2)">2017/2018(2)</option>
+					</select>
+					<br>
+					<span style="font-size: 15px; float: left;margin-left: 2px;padding-top: 6px;">上课时间：</span>
+					<select name="class_in" id = "class_in">
+						<option value="第一节">第一节</option>
+						<option value="第二节">第二节</option>
+						<option value="第三节">第三节</option>
+						<option value="第四节">第四节</option>
+						<option value="第六节">第六节</option>
+						<option value="第七节">第七节</option>
+						<option value="第八节">第八节</option>
+						<option value="第十节">第十节</option>
+						<option value="第十一节">第十一节</option>
+					</select><br>
+					<span style="font-size: 15px; float: left;margin-left: 2px;padding-top: 6px;">下课时间：</span>
+					<select name="class_out" id = "class_out">
+						<option value="第二节">第二节</option>
+						<option value="第三节">第三节</option>
+						<option value="第四节">第四节</option>
+						<option value="第五节">第五节</option>					
+						<option value="第七节">第七节</option>
+						<option value="第八节">第八节</option>
+						<option value="第九节">第九节</option>					
+						<option value="第十一节">第十一节</option>
+						<option value="第十二节">第十二节</option>						
+					</select><br><br>
+					<div id="bottom">
+						<input type="submit" value="保存" style="background-color: blue;border-radius: 20px;width: 60px;color:white;">	
+					</div>
+				</form>
+				<article id="promt"></article>
+			</div>
+		</div>
+		<script type="text/javascript" src = "js/form_check2.js"></script>
+		<script type="text/javascript" src = "js/parseURL.js"></script>
+		<script type="text/javascript" src = "js/subject_add_onload.js"></script>			
+	</body>
+</html>

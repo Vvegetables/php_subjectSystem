@@ -1,0 +1,35 @@
+<!doctype html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link type="text/css" rel="stylesheet" href="style/main_login.css" />
+<link type="text/css" rel="stylesheet" href="style/reset_login.css" />
+ 
+</head>
+
+<body>
+<div class="global">
+	<div class="topBar">
+		<h1>课程考勤系统 教师端</h1>
+	</div>
+	<div class="logoBar">
+		<div class="logo">
+			<a herf="#"><img src="images/pic.jpg" alt="pic"></a>
+		</div>
+		<div class="checkIn_box">
+			<form action="php/login_teacher.php?p=0" method = "post">
+				<div class="title"><h1>用户登录</h1></div>
+				<div class="ID"><h2>工号:<input type="text" id = "id" class="checkInID_text" name = "id" required="required"></h2></div>
+				<div class="password"><h2>密码：<input type="password" class="checkInPW_text" id = "password" name = "password" required="required"></h2></div> 
+				<input type="submit" value="CheckIn" class="checkIn_btn" name = "submit">
+				<input type="submit" value="Forget" class="forget_btn"  name = "submit">
+			</form>
+			<div style = "margin-top: 50px;">
+				<p id = "info" style="font-size: 25px; font-weight: bold; color:red; margin-left: 50px;"></p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

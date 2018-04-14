@@ -1,0 +1,330 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>内联框架打开</title>
+		<link type="text/css" rel="stylesheet" href="style/reset.css"> 
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+		<style type="text/css">
+		#titleBar{height:100px;}
+		#bottomBar{height: 100px;}
+		#left{width:800px;height: 100%;float:left;background-color: rgba(205,233,228,0.5);margin-left: 100px;border-radius:25px;-moz-border-radius:25px; /* 老的 Firefox */border:2px solid #a1a1a1;}
+		#top{text-align: center;font-size: 30px;}
+		#time{text-align: center;}
+		#frame{margin-top: 2%;margin-left: 30%;}
+		span{font-size: 25px;}
+		input{border: 1px solid;}
+		.myinput{font-size: 25px;border: 1px solid;padding: 2px;}
+		[name=sign]{font-size: 18px;background-color: #dedede;width: 100px;}
+		[name=subject]{border: 1px solid;}
+		option{border: 1px solid;}
+		select{font-size: 18px;}
+		#word{float: left;margin-left:10%;width: 25px;font-size: 25px;color: red;font-weight: bold;}
+		#qrcode,#prompt{margin-left: 15%;text-align: center;margin-top: 5%;width:600px;}
+		#right{float:right;width:800px;height:100%;background-color: rgb(205,233,228);margin-right: 100px;border-radius:25px;-moz-border-radius:25px; /* 老的 Firefox */border:2px solid #a1a1a1;}
+		#title{font-family: "YouYuan","Microsoft YaHei";color: rgba(30,30,60,0.9);font-size: 15px;margin-left: 10px;}
+		.topleft{float:left;margin-right: 10px;display: none;font-weight: bold;}
+		table{font-size: 20px;}
+		th{background-color: rgb(48,48,240);color:white;}
+		tr{text-align: center;}
+		#pagecount{width:500px; margin:10px auto 2px auto; padding-bottom:20px; text-align:center}
+		#pagecount span{margin:4px; font-size:14px}
+		.success{background-color: rgb(40,240,100);color:white;}
+		.fail{background-color: rgb(250,240,120);color:white;}
+		.absent{background-color: rgb(230,80,120);color:white;}
+		</style>
+	</head>
+	<body>
+	<div id = "titleBar"></div>
+	<div id = "left">
+		<div id = "top"><h1>课程考勤</h1></div>
+		<div id = "time"><h1 id = "curtime">课程考勤</h1></div>
+		<div id = "frame">
+			<span>选择课程:</span>
+			<select name="subject" id = "subselect">
+			</select>
+			<br><br><br>
+			<input name="sign" type="button" value="开始" class = "myinput" onclick = "startQRCode()" id = "start">
+			<input name="sign" type="button" value="暂停" class = "myinput" onclick = "pauseQRCode()" id = "pause">
+			<input name="sign" type="button" value="结束" class = "myinput" onclick = "endQRCode()" id = "end">						
+		</div>
+		<div id = "word">扫描右侧二维码签到</div>
+		<div id = "qrcode"></div>
+		<div id = "prompt"></div>
+	</div>
+	<div id = "right">
+		<div id = "title">
+			<h1 class = "topleft">迟到人数：</h1><h1 class = "topleft">成功签到人数：</h1><h1 class = "topleft">未考勤人数：</h1>
+		</div>
+		<div id = "data">
+			<table border = "1" width = "100%"></table>
+		</div>
+		<div id="pagecount"></div>
+	</div>
+	<div id = "bottomBar"></div>
+	</body>
+	 <script type="text/javascript">
+	 	var timestamp;
+	 	var realtime,mycaltime,interval,stuinfo,refertime,server_date;
+ 		function getTime(){
+                var data2 = $("#subselect").val();
+                //alert(data2);
+                $.ajax({
+                    type: "post",
+                   // dataType:'text',
+                   	data: {"subject":data2},
+                    url: "php/generate_qrcode_timestamp.php",
+                    async:true,
+                    success:function(data){
+						//alert(data);
+						timestamp = data.split("&")[1];
+						var hash = data.split("&")[0];
+						realtime = data.split("&")[2];
+						refertime = data.split("&")[3];
+						$('#qrcode').html("");
+						$('#qrcode').qrcode(hash);
+						// alert(data.split(";")[0]);
+						// alert(refertime);
+						alert(realtime);
+						// alert(timestamp);
+						// alert(hash);
+						// console.log(hash);
+                    },
+                    error:function(){
+                    	alert("失败！");
+                    }
+                });
+            
+            
+           }
+        function calTime(){
+        	//当前时间戳
+			var timestamp2 = server_date;
+			var dvalue = timestamp - timestamp2;
+			if(dvalue >= 0){
+				var hour = Math.floor(dvalue/3600);
+				var minute = Math.floor(dvalue%3600/60);
+				var second = Math.floor(dvalue%3600%60);
+				$("#prompt").html("<h1 style = 'color:#0000ff;font-size:35px'>"+"开始上课时间："+realtime+"  距离上课开始还有"+hour+"小时"+minute+"分钟"+second+"秒"+"</h1>");
+			}else{
+				$("#prompt").html("<h1 style = 'color:#ff0000;font-size:35px'>"+"上课时间已经到了！"+"</h1>");
+				clearInterval(mycaltime);
+			}
+
+        }
+        function startQRCode(){
+        	getTime();
+        	$(".topleft").show();
+
+           interval = setInterval("getTime()",5000);
+           mycaltime = setInterval("calTime()",1000);
+           //window.localStorage.setItem("interval",interval);
+           $("#start").attr("disabled", true);
+           stuinfo = setInterval("getData(1)",2000);
+           // var top1 = $("#title h1").text();
+           // var top2 = $("#title h1").next().text();
+           // var top3 = $("#title h1").next().text();
+           // $("#title h1").text(top1+total);
+        }
+
+       	function pauseQRCode(){
+       		//var interval = window.localStorage.getItem("interval");
+       		clearInterval(interval);
+       		clearInterval(stuinfo);
+       		$("#start").attr("disabled", false);
+       	}
+       	function endQRCode(){
+       		//var interval = window.localStorage.getItem("interval");
+       		clearInterval(interval);
+       		clearInterval(mycaltime);
+       		clearInterval(stuinfo);
+       		var data2 = $("#subselect").val();
+       		$("#start").attr("disabled", true);
+       		$("#pause").attr("disabled", true);
+       		$("#end").attr("disabled", true);
+       			$.ajax({
+                    type: "post",
+                   	data: "subject=" + data2,
+                    url: "php/endQRCode.php",
+                    async:true,
+                    success:function(data){
+                    	$('#qrcode').html("<h1 style = 'color:#0000ff;font-size:35px'>" + data + "</h1>");
+                    }
+                });
+            $("#prompt").html("");
+       	}
+
+       	function getNowFormatDate() {
+       		//这是客户端时间
+    		// var date = new Date();
+    		// var seperator1 = "-";
+    		// var seperator2 = ":";
+    		// var month = date.getMonth() + 1;
+    		// var strDate = date.getDate();
+    		// if (month >= 1 && month <= 9) {
+      //   		month = "0" + month;
+    		// }
+   		 // 	if (strDate >= 0 && strDate <= 9) {
+      //   		strDate = "0" + strDate;
+    		// }
+    		// var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+      //       + " " + date.getHours() + seperator2 + date.getMinutes()
+      //       + seperator2 + date.getSeconds();
+      //       $("#curtime").html(currentdate)
+      		//获取服务器时间
+      		$.ajax({
+      			type:'post',
+      			url:'php/get_server_date.php',
+      			async:true,
+      			success:function(currentdate){
+      				server_date = currentdate;
+      				$("#curtime").html(currentdate);	
+      			},
+      			error:function(){
+      				alert("服务器连接失败！");
+      			}
+      		});
+		}
+
+var curPage = 1; //当前页码
+var total,pageSize,totalPage,subjects;
+
+//获取数据
+function getData(page){ 
+	var data2 = $("#subselect").val();
+	$.ajax({
+		type: 'POST',
+		url: 'php/show_checkinfo.php',
+		data: {'pageNum':page-1,'subjectname':data2,'starttime':refertime},
+		dataType:'json',
+		// beforeSend:function(){
+		// 	$("#list ul").append("<li id='loading'>loading...</li>");
+		// },
+		success:function(json){
+			$("#data table").empty();
+			total = json.total; //总记录数
+			var successnum = 0,failnum=0;
+			pageSize = json.pageSize; //每页显示条数
+			curPage = page; //当前页
+			totalPage = json.totalPage; //总页数
+			var tr = "<tr><th>学生姓名</th><th>学生学号</th><th>班级</th></tr>";
+			var list = json.list;
+			//alert(json.classid+json.nums);
+			if(total != 0){
+				$.each(list,function(index,array){ //遍历json数据列
+					if(array['issuccess'] == null){
+						tr += "<tr class = 'absent'><td>"+array['studentname']+"</td><td>"+array['studentid']+"</td><td>"+array['class']+"</td></tr>";
+						failnum++;
+					}else if(array['issuccess'] == 0){
+						tr += "<tr class = 'fail'><td>"+array['studentname']+"</td><td>"+array['studentid']+"</td><td>"+array['class']+"</td></tr>";
+					}else{
+						tr += "<tr class = 'success'><td>"+array['studentname']+"</td><td>"+array['studentid']+"</td><td>"+array['class']+"</td></tr>";
+						successnum++;
+					}
+
+				});			
+			}
+			$("#title h1:eq(0)").text("迟到人数："+json.fail);
+			$("#title h1:eq(0)").css({"color":"rgb(250,240,120)"});
+			$("#title h1:eq(1)").text("成功签到人数："+json.success);
+			$("#title h1:eq(1)").css({"color":"rgb(40,240,100)"});	
+			$("#title h1:eq(2)").text("未考勤人数："+json.absent);
+			$("#title h1:eq(2)").css({"color":"rgb(230,80,120)"});
+			$("#data table").append(tr);
+		},
+		complete:function(){ //生成分页条
+			getPageBar();
+		},
+		error:function(json){
+			//classid = json.classid; //总记录数
+			
+			alert(json.status + " " + json.readyState);
+			//alert("数据加载失败");
+		}
+	});
+}
+
+//获取分页条
+function getPageBar(){
+	//页码大于最大页数
+	if(curPage>totalPage) curPage=totalPage;
+	//页码小于1
+	if(curPage<1) curPage=1;
+	pageStr = "<span>共"+total+"条</span><span>"+curPage+"/"+totalPage+"</span>";
+	
+	//如果是第一页
+	if(curPage==1){
+		pageStr += "<span>首页</span><span>上一页</span>";
+	}else{
+		pageStr += "<span><a href='javascript:void(0)' rel='1'>首页</a></span><span><a href='javascript:void(0)' rel='"+(curPage-1)+"'>上一页</a></span>";
+	}
+	
+	//如果是最后页
+	if(curPage>=totalPage){
+		pageStr += "<span>下一页</span><span>尾页</span>";
+	}else{
+		pageStr += "<span><a href='javascript:void(0)' rel='"+(parseInt(curPage)+1)+"'>下一页</a></span><span><a href='javascript:void(0)' rel='"+totalPage+"'>尾页</a></span>";
+	}
+	pageStr += "<input id = 'valjump' type='text' /><span><a id='jump' href='javascript:void(0)' rel='"+parseInt(curPage)+"'>跳转</a></span>";
+	$("#pagecount").html(pageStr);
+}
+		
+function choosesub(){
+
+
+    $.ajax({
+        type: "post",
+        //data: {"subject":data2,"starttime":data3},
+        url: "php/sign_get_info.php",
+        dataType:'json',
+        async:true,
+        success:function(data){
+        	var issuccess = data.issuccess;
+        	// alert(issuccess);
+        	var list = data.list;
+        	// var sub = new Array();
+        	var i = 0;
+        	if(issuccess != 0){
+				// $.each(list,function(index,array){ 
+				// 	sub[i++] = array['subname'];
+				// });
+				var obj = document.getElementsByTagName("select")[0];//获得select
+   			 	//alert(length);
+    			for(var i = 0;i<list.length;i++){
+    				//obj.add(new Option(para[i],para[i]));
+    				obj.options[i] = new Option(list[i],list[i]);
+    			}
+			}
+        },
+        error:function(json){
+			//classid = json.classid; //总记录数
+			
+			alert(json.status + " " + json.readyState);
+			//alert("数据加载失败");
+		}
+    });
+}
+
+
+		$(function(){
+			choosesub();
+			$("#pagecount span a").live('click',function(){
+			var rel = $(this).attr("rel");
+			if(rel){
+			getData(rel);
+			}
+			});
+			$("#jump").live('click',function(){
+				$(this).attr("rel",$("#valjump").val());
+				var rel = $(this).attr("rel");
+				if(rel){
+					getData(rel);
+				}
+			});
+		});
+
+		setInterval("getNowFormatDate()",1000);
+        </script>
+	<!-- <script type = "text/javascript" src = "js/choosesub.js"></script> -->
+</html>

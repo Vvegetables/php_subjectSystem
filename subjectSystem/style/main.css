@@ -1,0 +1,14 @@
+@charset "utf-8";
+/* CSS Document */
+body{background-color: #dddddd;}
+.header{ width: 30%;height:60px; background-color: #00ff00;padding-top: 20px;
+	margin-left:auto;margin-right:auto;}
+.header h1{ line-height: 35px; text-align: center; color: #ffffff;}
+.icons{margin-top: 40px;height: 60px;padding-top: 20px;
+	width:50%;border: 1px solid #000000; margin-left:auto;margin-right:auto;
+	background-color: #ffffff;}
+.icons #user{width: 40px;float: right;}
+.image{margin-left: 150px;}
+.icons #teach_image{width:300px;height:50px;}
+.mid{margin-top: 20px;} 
+.mid iframe{width:100%; height: 600px;}

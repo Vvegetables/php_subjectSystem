@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>
+			file_open---window
+		</title>
+		<style type="text/css">
+			body{
+				background-color: #dddddd;
+			}
+			#container{
+				height: 940px;
+			}
+			#left{
+				width:900px;
+				height: 100%;
+				float: left;
+				text-align: center;
+			}
+			#title{
+				margin-top: 200px;
+				margin-bottom: 50px;
+			}
+			#title p{
+				font-size: 30px;
+			}
+			#middle{
+				width:23px;
+				height: 100%;
+				float: left;
+			}
+			#right{
+				width:900px;
+				height: 100%;
+				float: right;
+				text-align: center;
+			}
+		</style>
+		<script type = "text/javascript" src = "js/upfile_para.js"></script>
+	</head>
+	<body>
+		<div id="container">
+			<div id="left">
+				<div id="title">
+					<p>文件导入</p>
+				</div>
+				<div id="body">
+					<form id = "upfile" action="php/upLoadFile.php?p=0" method="post" enctype="multipart/form-data">
+						<span style="font-size: 20px;">选择正确的文件：</span><input type="hidden" value="1000000" name = "MAX_FILE_SIZE">
+						<input type="file" id = "upfile" name = "file" value="" >
+						<br><br><br><br>
+						<input type="submit" value="上传">
+					</form>
+				</div>
+			</div>
+			<div id="middle">
+				<hr style="width: 2px;height:100%">
+			</div>
+			<div id="right">
+				<div id="title">
+					<p>文件模板下载</p>
+				</div>
+				<div id="body">
+					<form action="get">
+						<a href ="php/doDownload.php?filename=../data/list.xlsx" style="font-size: 20px;">文件模板下载</a><img src="images/file.png" alt="图片" style="width:20px;"><br>
+						<img src="images/demo.png" alt="图片">
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

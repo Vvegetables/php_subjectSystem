@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link type="text/css" rel="stylesheet" href="style/fPage.css">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<title>
+			自定义输入
+		</title>
+		<style type="text/css">
+			.header{
+				text-align: center;
+			}
+			.iBody{
+				margin-top: 3%;
+				margin-left: 30%; 
+			}
+			#table{
+				width: 50%;
+				font-size:20px;
+				margin-top: 20px;
+				margin-bottom: 50px;
+			}
+			.btn{
+/*				color: #8c96a0;*/
+				margin-top: 20px;
+				font-size: 20px;
+				text-shadow:1px 1px 1px #000;
+				border:1px solid #dce1e6;
+				box-shadow: 0 1px 2px #000 inset,0 -1px 0 #a8abae inset;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<p style="font-size: 30px;">自定义输入</p>		
+		</div>
+		<div class="iBody">
+			<button id="b1" class = "btn">添加</button><br>
+			<form>
+				<table border=1 id="table" class = "caname">
+					<tr><th>学号</th><th>姓名</th><th>性别</th><th>班级</th><th>操作</th></tr>
+				</table>
+				
+			</form>
+			<button id="b2" class = "btn">保存</button><br>
+		</div>
+		<div id = "prompt"></div>
+	</body>
+	<script type="text/javascript">
+  		$(function (){
+  		var count = 0;
+  		$("#b1").click(function(){
+  
+		//组装对象
+		$tr=$("<tr></tr>");
+		$td1=$("<td></td>");
+		$input1=$("<input type='text' name = id"+ count +" input'></input>");
+		$td1.append($input1);
+  
+		$td2=$("<td></td>");
+		$input2=$("<input type='text' name = name"+ count +" input'></input>");
+  		$td2.append($input2);
+
+		$td3=$("<td></td>");
+		$input3=$("<input type='text' name = sex"+ count +" input'></input>");
+		$td3.append($input3);
+		
+		$td4=$("<td></td>");
+		$input4=$("<input type='text' name = class"+ count++ +" input'></input>");  
+		$td4.append($input4);
+
+		$td5=$("<td></td>");
+
+		$href=$("<a></a>");
+		$href.attr("href","##");
+		$href.text("delete");
+		$td5.append($href);
+
+		$href.click(function(){
+			if(window.confirm("确定删除？")){
+  				//这里使用this表示当前事件绑定对象---？ $(this)不能用$(href)代替，否则会认为每次都是最新对象，原有对象的行为不能保存
+  				$(this).parent().parent().remove();  
+			}else{
+   				return;
+			}
+		});
+  
+		$("#table").append($tr);
+    		$tr.append($td1);
+    		$tr.append($td2);
+    		$tr.append($td3);
+    		$tr.append($td4);
+    		$tr.append($td5);
+		});
+
+  		//ajax传输数据
+  		// var data = $("form:input").serializeArray();
+  		var mydata = window.location.href;
+		var decode = decodeURI(mydata);
+		//var data = decode.split("?")[1];
+		var url = decode.split("?")[1];
+    	var _teacherid = url.split("&")[1];
+    	var teacherid = _teacherid.split("=")[1];
+    	// var para = url.split("&");
+    	var _teachername = url.split("&")[0];
+    	var teachername = url.split("=")[1];
+		//var para = data.split("&");
+		//alert(para[0].split("=")[1]+"&teachername="+para[1].split("=")[1]);
+  		$("#b2").bind("click",function(){
+  			// var inputs = document.getElementsByTagName("input");
+  			// var str="";
+  			// for(var i = 0;i<inputs.length-1;i++){
+  			// 	str += inputs[i].getAttribute("value") + "&";
+  			// }
+  			// str += inputs[inputs.length-1].getAttribute("value");
+  			// alert(str);
+  			var str = "";
+			$("input").each(function(i,val){
+    			//alert(i);
+    			// alert(val.name);
+    			// alert(val.value);
+    			str += val.name + "=" + val.value +"&";     
+			});
+			//alert(str);
+			str += "length=" + $("input").length;
+
+            $.ajax({
+               type: "POST",
+               url: "php/add_student.php?p=0&teachername="+teachername+"&teacherid="+teacherid,
+               data: str,
+               success: function(data){
+                        //$("#prompt").html('<h2>'+data+'</h2>');
+                        alert(data);
+						var add_sub_old_url = window.localStorage.getItem('add_sub_old_url');
+						parent.window.location.href = encodeURI(add_sub_old_url);
+                }
+            });
+
+  		});
+  		});
+	</script>
+
+</html>
